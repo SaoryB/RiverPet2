@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>RiverPet</title>
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .navbar {
+            background-color:white;
+        }
+
+        .fund10{
+            background-image: url('img/fundo2.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .content {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+        }
+        .cor{
+            color:rgb(14, 13, 13);
+        }
+        .calendar-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .calendar {
+            border: 1px solid #0c0b0b;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #f3bcbc;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .calendar-day {
+            text-align: center;
+            padding: 5px;
+            border: 1px solid #030303;
+            cursor: pointer;
+        }
+
+        .selected-dates {
+            margin-top: 20px;
+        }
+
+        .selected-dates h3 {
+            margin-bottom: 10px;
+        }
+
+        #task-input {
+            margin-right: 10px;
+            padding: 5px;
+            width: 60%;
+        }
+
+        #add-task {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        #add-task:hover {
+            background-color: #1f8434;
+        }
+    </style>
+</head>
+<body>
+    <section class="fund10">
+  <header class="header sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="indexcliente.html"><strong class="h6 mb-0 font-weight-bold text-uppercase">Inicio</strong></a></li>
+              <li class="nav-item"><a class="nav-link" href="clientescadastrados.html">Clientes</a></li>
+              <li class="nav-item"><a class="nav-link" href="nossosplanos.html">Nossos Planos</a></li>
+              <li class="nav-item"><a class="nav-link" href="nossosperfis.html">Nossos Perfis</a></li>
+              <li class="nav-item"><a class="nav-link" href="horarios.html">Horários</a></li>
+              <li class="nav-item"><a class="nav-link" href="agendamento.html">Agendamento</a></li>
+              <li class="nav-item"><a class="nav-link" href="index.html">Sair</a></li>
+          </ul>
+      </div>
+  </div>
+</nav>
+</header>
+<section class="fund10">
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+  <div class="calendar-container">
+    <div class="calendar">
+        <div class="calendar-header">
+            <button id="prev-month">Anterior</button>
+            <h2 id="current-month"></h2>
+            <button id="next-month">Próximo</button>
+        </div>
+        <div class="calendar-days"></div>
+    </div>
+    <div class="selected-dates">
+        <h3>Datas Selecionadas:</h3>
+        <ul id="selected-dates-list"></ul>
+        <div>
+            <input type="text" id="task-input" placeholder="Digite sua tarefa">
+            <button id="add-task">Adicionar Tarefa</button>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const currentMonth = new Date();
+        let selectedDates = {};
+        let tasks = {};
+
+        const calendarDays = document.querySelector(".calendar-days");
+        const selectedDatesList = document.getElementById("selected-dates-list");
+        const currentMonthElement = document.getElementById("current-month");
+        const prevMonthButton = document.getElementById("prev-month");
+        const nextMonthButton = document.getElementById("next-month");
+        const taskInput = document.getElementById("task-input");
+        const addTaskButton = document.getElementById("add-task");
+
+        function renderCalendar() {
+            const year = currentMonth.getFullYear();
+            const month = currentMonth.getMonth();
+
+            currentMonthElement.textContent = `${year}/${month + 1}`;
+
+            // Limpa o calendário anterior
+            calendarDays.innerHTML = "";
+
+            const firstDayOfMonth = new Date(year, month, 1);
+            const lastDayOfMonth = new Date(year, month + 1, 0);
+
+            // Preenche os dias do mês
+            for (let day = firstDayOfMonth; day <= lastDayOfMonth; day.setDate(day.getDate() + 1)) {
+                const calendarDay = document.createElement("div");
+                calendarDay.className = "calendar-day";
+                calendarDay.textContent = day.getDate();
+
+                calendarDay.addEventListener("click", () => {
+                    toggleDate(day);
+                });
+
+                calendarDays.appendChild(calendarDay);
+            }
+        }
+
+        function toggleDate(date) {
+            const dateStr = date.toISOString().split('T')[0];
+
+            if (!selectedDates[dateStr]) {
+                selectedDates[dateStr] = [];
+            }
+
+            const task = taskInput.value.trim();
+            if (task !== "") {
+                selectedDates[dateStr].push(task);
+                taskInput.value = "";
+                renderSelectedDates();
+            }
+        }
+
+        function renderSelectedDates() {
+            selectedDatesList.innerHTML = "";
+
+            for (const dateStr in selectedDates) {
+                const listItem = document.createElement("li");
+                listItem.textContent = dateStr;
+                const ulTasks = document.createElement("ul");
+                const tasksForDate = selectedDates[dateStr];
+
+                tasksForDate.forEach((task) => {
+                    const taskItem = document.createElement("li");
+                    taskItem.textContent = task;
+                    ulTasks.appendChild(taskItem);
+                });
+
+                listItem.appendChild(ulTasks);
+                selectedDatesList.appendChild(listItem);
+            }
+        }
+
+        prevMonthButton.addEventListener("click", () => {
+            currentMonth.setMonth(currentMonth.getMonth() - 1);
+            renderCalendar();
+        });
+
+        nextMonthButton.addEventListener("click", () => {
+            currentMonth.setMonth(currentMonth.getMonth() + 1);
+            renderCalendar();
+        });
+
+        addTaskButton.addEventListener("click", () => {
+            const selectedDay = document.querySelector(".calendar-day.selected");
+            if (selectedDay) {
+                const selectedDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), parseInt(selectedDay.textContent));
+                toggleDate(selectedDate);
+            }
+        });
+
+        renderCalendar();
+    });
+</script>
+</section>
+</br>
+</br>
+</br>
+<footer class="text-center text-white" style="background-color: #2e1d28;">
+  <div class="container p-4 pb-0">
+    <section class="">
+      <p class="d-flex justify-content-center align-items-center">
+        <span class="me-3 text-center">Alguma dúvida ou sugestão? Entre em contato conosco:   </span>
+        <p>    </p>
+        <a href="contato.html" button type="button" class="btn btn-outline-light btn-rounded">
+          Entrar em contato!</a>
+      </p>
+    </section>
+  </div>
+  <div class="text-center p-3" style="background-color: rgba(3, 3, 3, 0.082);">
+    © 2023 Ciências da Computação:
+    <a class="text-white" href="https://www.instagram.com/ccp.famper/?igshid=NjIwNzIyMDk2Mg%3D%3D">Instagram</a>
+  </div>
+</footer>
+</body>
