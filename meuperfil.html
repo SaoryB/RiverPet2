@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>RiverPet</title>
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .navbar {
+            background-color:white;
+        }
+
+        .navbar-dark .navbar-nav .nav-link{
+            color: black;
+        }
+        .fund3{
+            background-image: url('img/fundo2.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .form-container {
+            border: 2px solid #080808;
+            padding: 20px;
+            background-color: #fcc0c0
+        }
+
+    </style>
+</head>
+<body>
+    <section class="fund3">
+  <header class="header sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item"><a class="nav-link" href="indexcliente.html"><strong class="h6 mb-0 font-weight-bold text-uppercase">Inicio</strong></a></li>
+                <li class="nav-item"><a class="nav-link" href="meuperfil.html">Meu Perfil</a></li>
+                <li class="nav-item"><a class="nav-link" href="meuspets.html">Meus Pets</a></li>
+                <li class="nav-item"><a class="nav-link" href="agendar.html">Agendamento</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html">Sair</a></li>
+            </ul>
+        </div>
+    </div>
+  </nav>
+</header>
+</br>
+
+</br>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6 form-container">
+          <form>
+            <div class="mb-3">
+              <label class="form-label" for="nome"><b>Primeiro nome:</b></label>
+              <input type="text" id="nome" class="form-control" style="width: 100%;"/>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="sobrenome"><b>Sobrenome:</b></label>
+              <input type="text" id="sobrenome" class="form-control" style="width: 100%;" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="email"><b>Email:</b></label>
+              <input type="email" id="email" class="form-control" style="width: 100%;" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="telefone"><b>Telefone:</b></label>
+              <input type="number" id="telefone" class="form-control" style="width: 100%;" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="endereco"><b>Endereço:</b></label>
+                <input type="text" id="endereco" class="form-control" style="width: 100%;" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="bairro"><b>Bairro:</b></label>
+                <input type="text" id="bairro" class="form-control" style="width: 100%;" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="cidade"><b>Cidade:</b></label>
+                <input type="text" id="cidade" class="form-control" style="width: 100%;" />
+              </div>
+            <div class="mb-3">
+              <label class="form-label" for="login"><b>Nome de usuário:</b></label>
+              <input type="text" id="login" class="form-control" style="width: 100%;" />
+            </div>
+            <a href="retornomensagem3.html" button type="button" class="btn btn-success btn-lg">
+                ALTERAR CADASTRO
+            </a>
+            <a href="indexcliente.html" button type="button" class="btn btn-secondary btn-lg">
+                VOLTAR
+            </a>
+          </form>
+        </div>
+      </div>
+    </div>
+    </br>
+    </br>
+  </section>
+
+  <footer class="text-center text-white" style="background-color: #2e1d28;">
+    <div class="container p-4 pb-0">
+      <section class="">
+        <p class="d-flex justify-content-center align-items-center">
+          <span class="me-3 text-center">Alguma dúvida ou sugestão? Entre em contato conosco:   </span>
+          <p>    </p>
+          <a href="contato.html" button type="button" class="btn btn-outline-light btn-rounded">
+            Entrar em contato!</a>
+        </p>
+      </section>
+    </div>
+    <div class="text-center p-3" style="background-color: rgba(3, 3, 3, 0.082);">
+      © 2023 Ciências da Computação:
+      <a class="text-white" href="https://www.instagram.com/ccp.famper/?igshid=NjIwNzIyMDk2Mg%3D%3D">Instagram</a>
+    </div>
+  </footer>
+</body>
